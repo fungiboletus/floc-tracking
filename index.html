@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Does Google FLoC track your porn preferences using the ad blocking EasyList ?</title>
+<style type="text/css">
+@media (prefers-color-scheme: dark) {
+body {
+color: #fff;
+background: #222;
+}
+
+a:link {
+color: #9cf
+}
+
+a:hover,
+a:visited:hover {
+color: #cef
+}
+
+a:visited {
+color: #c9f
+}
+}
+
+body {
+margin: 1em auto;
+max-width: 40em;
+padding: 0 .62em;
+font: 1.2em/1.62 sans-serif;
+}
+
+h1,
+h2,
+h3 {
+line-height: 1.2;
+margin-top: 3em;
+}
+
+@media print {
+body {
+max-width: none
+}
+}
+
+img {
+max-width: 100%;
+max-width: 90vw;
+}
+
+iframe {
+max-width: 100%;
+}
+
+code {
+font-family: monospace, monospace;
+}
+</style>
+</head>
+
+<body>
+<h1>Does Google FLoC track your porn preferences using the ad blocking EasyList ?</h1>
+
+<p>The FLoC draft has <a href="https://wicg.github.io/floc/#sensitive-information">a section about sensitive information</a>. You are invited to read it but I will summarize it here: FLoC can and will reveal sensitive information, we cannot surely prevent that because it's difficult, fuck you.</p>
+
+<p>I searched in <a href="https://github.com/chromium/chromium/blob/58be4808b10ca72b4642bc3ff3b1513c9ec051d3/chrome/browser/federated_learning/floc_eligibility_observer.h">the Chromium open-source FLoC implementation</a> how sensitive information was managed. The draft says "As a first mitigation, the browser should remove sensitive categories from its data collection", but I have not found anything doing that. I may have missed it though, it's a huge codebase, and I would gladly be proven wrong. However, from my understanding of the current implementation, any website with ads or using the FLoC API gets FLoC. It corresponds to what the FLoC draft says "at the adoption phase, the page can be eligible to be included in the interest cohort computation if there are ads resources in the page, OR if the API is used."</p>
+
+<p><a href="https://github.com/chromium/chromium-ads-detection/blob/master/third_party/filter_lists/9.27.0/final_list">The list used in Chromium to identify ads</a> is based on <a href="https://easylist.to">EasyList</a>, a list created and maintained by people to block ads. It's a bit ironic that Google <a href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/ad_tagging.md">uses</a> the work of people blocking ads to track people for advertising reasons.</p>
+<p>The list blocks ads in porn websites, so if you visit porn websites with ads, FLoC will be enabled and track your porn preferences and share this potentially sensitive information to other ads networks. To be honest, the most popular porn website includes Google Analytics so it's not like your porn preferences were unknown to Google before. But I think it shows that FLoC is definitely not an improvement.</p>
+
+<p>The list also has some generic filters that can generate false positive. So you can enable FLoC on many websites that have not explicitly disabled FLoC by having an image with common ads names, like 300x250.jpg. For example, a lot of wiki websites are vulnerable because they allow users to rename images.</p>
+
+<p>Currently, FLoC is not enabled for everyone everywhere, but Google should consider stopping this project, set <a href="https://adservice.google.com/settings/do_ad_settings_allow_floc_poc">https://adservice.google.com/settings/do_ad_settings_allow_floc_poc</a> to always return <code>[false,false,false]</code> and eventually remove the FLoC implementation from Chromium and Chrome.</p>
+<br />
+<hr />
+<p>Antoine — 2021-06-17</p>
+</body>
+
+</html>
